@@ -11,14 +11,18 @@ const args = arg({
   '--branches': Number, // default 80
 })
 
+const packageFilename = resolve(join('package.json'))
+const pkg = require(packageFilename)
+const pkgCfg = pkg['check-coverage-summary']
+
+const percentages = {};
+percentages.lines = args['--lines'] || pkgCfg.lines || 80
+percentages.statements = args['--statements'] || pkgCfg.statements || 80
+percentages.functions = args['--functions'] || pkgCfg.functions || 60
+percentages.branches = args['--branches'] || pkgCfg.branches || 60
+
 const fromFilename = args['--from'] || join('coverage', 'coverage-summary.json')
 const coverageFilename = resolve(fromFilename)
-const percentages = {};
-percentages.lines = args['--lines'] || 80
-percentages.statements = args['--statements'] || 80
-percentages.functions = args['--functions'] || 80
-percentages.branches = args['--branches'] || 80
-
 const coverage = require(coverageFilename)
 const total = coverage.total
 if (!total) {
