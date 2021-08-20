@@ -1,6 +1,6 @@
 {
   "name": "check-coverage-summary",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "checking the coverage percentage from coverage-summary.json",
   "bin": {
     "check-coverage-summary": "bin/check-coverage-summary.js"
