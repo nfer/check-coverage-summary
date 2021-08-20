@@ -13,7 +13,7 @@ const args = arg({
 
 const packageFilename = resolve(join('package.json'))
 const pkg = require(packageFilename)
-const pkgCfg = pkg['check-coverage-summary']
+const pkgCfg = pkg['check-coverage-summary'] || {}
 
 const percentages = {};
 percentages.lines = args['--lines'] || pkgCfg.lines || 80
