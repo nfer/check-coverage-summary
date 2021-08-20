@@ -4,13 +4,33 @@ const { join, resolve } = require('path')
 const fs = require('fs')
 const arg = require('arg')
 
-const args = arg({
+const argv = {
+  // Types
+  '--help': Boolean,
+  '--version': Boolean,
   '--from': String, // default coverage/coverage-summary.json
   '--lines': Number, // default 80
   '--statements': Number, // default 80
   '--functions': Number, // default 80
   '--branches': Number, // default 80
-})
+
+	// Aliases
+	'-h': '--help',
+	'-v': '--version',
+}
+
+const args = arg(argv)
+
+if(args['--help']) {
+  console.log(argv);
+  process.exit(1)
+}
+
+if(args['--version']) {
+  const curPkg = require(join(__dirname, '..', 'package.json'))
+  console.log(`${curPkg.name} ${curPkg.version}`);
+  process.exit(1)
+}
 
 const packageFilename = resolve(join('package.json'))
 const pkg = require(packageFilename)
