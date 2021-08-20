@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const { join, resolve } = require('path')
+const fs = require('fs')
 const arg = require('arg')
 
 const args = arg({
@@ -23,6 +24,11 @@ percentages.branches = args['--branches'] || pkgCfg.branches || 60
 
 const fromFilename = args['--from'] || join('coverage', 'coverage-summary.json')
 const coverageFilename = resolve(fromFilename)
+if (!fs.existsSync(coverageFilename)) {
+  console.error('🚨 Could not find coverage file %s', coverageFilename)
+  process.exit(1)
+}
+
 const coverage = require(coverageFilename)
 const total = coverage.total
 if (!total) {
